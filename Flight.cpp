@@ -13,14 +13,18 @@ void Flight::bookTicket()
     cout << "\nPassenger ID : ";
     cin >> id;
 
-    if(passengers.searchPassenger(id) != nullptr)
+    // Check if Passenger ID already exists
+    if (passengers.searchPassenger(id) != nullptr)
     {
         cout << "Passenger ID already exists.\n";
         return;
     }
 
+    // Clear the newline left by cin >> id
+    cin.ignore();
+
     cout << "Passenger Name : ";
-    cin >> name;
+    getline(cin, name);
 
     cout << "Passenger Age : ";
     cin >> age;
@@ -28,19 +32,21 @@ void Flight::bookTicket()
     cout << "Seat Number (1-10) : ";
     cin >> seat;
 
-    if(!seats.isSeatAvailable(seat))
+    // Check if seat is available
+    if (!seats.isSeatAvailable(seat))
     {
         cout << "Seat is already booked or invalid.\n";
         return;
     }
 
+    // Book the seat
     seats.bookSeat(seat);
 
+    // Store passenger details
     passengers.insertPassenger(id, name, age, seat);
 
     cout << "\nTicket Booked Successfully.\n";
 }
-
 void Flight::cancelTicket()
 {
     int id;
